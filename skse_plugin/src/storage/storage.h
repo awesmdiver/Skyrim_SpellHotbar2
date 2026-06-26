@@ -31,6 +31,11 @@ namespace SpellHotbar::Storage {
      */
     void LoadCallback(SKSE::SerializationInterface* a_intfc);
 
+    /**
+     * Reset state when a save is reverted (new game / character switch)
+     */
+    void RevertCallback(SKSE::SerializationInterface* a_intfc);
+
     bool slotSpell(RE::FormID form, size_t index, menu_slot_type slot_type);
 
 }

@@ -144,6 +144,7 @@ namespace SpellHotbar::events {
                                             }
                                             return RE::BSEventNotifyControl::kContinue;
                                         }
+                                        [[fallthrough]]; // non-power-attack melee also checks sneak attack
                                     case RE::WEAPON_TYPE::kBow:
                                     case RE::WEAPON_TYPE::kCrossbow:
                                     default:

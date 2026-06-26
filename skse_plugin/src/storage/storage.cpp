@@ -152,6 +152,13 @@ namespace SpellHotbar::Storage {
 
     }
 
+    void RevertCallback(SKSE::SerializationInterface*)
+    {
+        logger::trace("Reverting SKSE save state...");
+        SpellHotbar::Bars::clear_bars();
+        GameData::oblivion_bar.clear();
+    }
+
     template <typename T>
     inline bool read_clamped(SKSE::SerializationInterface* a_intfc, const std::string & name, T & target, T min, T max) {
         T read_value{};
@@ -453,7 +460,10 @@ namespace SpellHotbar::Storage {
 
                 //read num keybinds, make saves compatible when new binds are added
                 uint8_t num_keybinds{ 0U };
-                a_intfc->ReadRecordData(&num_keybinds, sizeof(uint8_t));
+                if (!a_intfc->ReadRecordData(&num_keybinds, sizeof(uint8_t))) {
+                    logger::error("Failed to read num_keybinds!");
+                    break;
+                }
 
 #ifdef DEBUG_LOG_SERIALIZATION
                 logger::info("Loading {} keybinds", num_keybinds);
@@ -461,7 +471,10 @@ namespace SpellHotbar::Storage {
 
                 for (uint8_t i = 0U; i < num_keybinds; i++) {
                     int16_t key{ -1 };
-                    a_intfc->ReadRecordData(&key, sizeof(int16_t));
+                    if (!a_intfc->ReadRecordData(&key, sizeof(int16_t))) {
+                        logger::error("Failed to read keybind {}!", i);
+                        break;
+                    }
                     Input::rebind_key(i, key, false);
 #ifdef DEBUG_LOG_SERIALIZATION
                     logger::info(" Key {}: {}", i, key);

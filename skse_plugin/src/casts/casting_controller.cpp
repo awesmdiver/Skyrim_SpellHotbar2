@@ -10,8 +10,10 @@ namespace SpellHotbar::casts::CastingController {
 	std::unique_ptr<BaseCastingInstance> current_cast = nullptr;
 
 	void reset_cast() {
-		current_cast->on_reset();
-		current_cast.reset();
+		if (current_cast) {
+			current_cast->on_reset();
+			current_cast.reset();
+		}
 	}
 
 	//Play sound on actor and return soundhandle
@@ -387,7 +389,7 @@ namespace SpellHotbar::casts::CastingController {
 		float timer_old = m_cast_timer;
 		advance_time(delta);
 
-		if (timer_old == 0) {
+		if (timer_old <= 0.0f) {
 			//startup
 			//stop if not anim or key not down directly at start
 			if (!keydown || !is_anim_ok(pc)) {

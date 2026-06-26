@@ -2,10 +2,8 @@ cmake_minimum_required(VERSION 3.21)
 
 project(SpellHotbar2 VERSION 2.0.10 LANGUAGES CXX)
 
-#output folder to copy dll after building
-set(OUTPUT_FOLDER "F:/Skyrim Dev/ADT/mods/Spell Hotbar 2")
-#set(OUTPUT_FOLDER "F:/Skyrim Dev/DEV_1_5_97/mods/Spell Hotbar 2")
-#set(OUTPUT_FOLDER "F:/Skyrim Dev/DEV_1_6_1170/mods/Spell Hotbar 2")
+#output folder to copy dll after building — override via: cmake -DOUTPUT_FOLDER="path/to/mod"
+set(OUTPUT_FOLDER "" CACHE PATH "Directory to copy the built DLL into (under SKSE/Plugins/)")
 
 
 find_package(imgui CONFIG REQUIRED)

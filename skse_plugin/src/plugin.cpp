@@ -55,6 +55,7 @@ SKSEPluginLoad(const SKSE::LoadInterface * skse)
     serialization->SetUniqueID(serializazion_id);
     serialization->SetSaveCallback(SpellHotbar::Storage::SaveCallback);
     serialization->SetLoadCallback(SpellHotbar::Storage::LoadCallback);
+    serialization->SetRevertCallback(SpellHotbar::Storage::RevertCallback);
     logger::info("SpellHotbar2 serialization registered!");
 
     return true;
